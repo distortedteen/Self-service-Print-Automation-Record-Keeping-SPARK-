@@ -1,0 +1,13 @@
+SPARK/
+├── app.py
+├── logs.db
+├── uploads/
+├── templates/
+│   ├── index.html
+│   ├── admin.html
+│   └── admin_login.html
+├── static/
+│   ├── style.css
+│   └── college_logo.png
+├── requirements.txt
+└── README.md
