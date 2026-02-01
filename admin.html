@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SPARK | Admin Logs</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+<h2 style="text-align:center;">SPARK : NFSU-TC Print Logbook</h2>
+
+<div style="text-align:right; margin:10px;">
+  <a href="/admin_logout"
+     style="color:red; font-weight:bold; text-decoration:none;">
+    Logout
+  </a>
+</div>
+
+<div style="text-align:center; margin-bottom:15px;">
+    <a href="/export_csv" style="
+        padding: 8px 15px;
+        background: #28a745;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+    ">
+        Export CSV
+    </a>
+</div>
+
+<div style="text-align:center; margin-bottom:15px;">
+  <a href="/admin"
+     style="margin:5px; padding:6px 12px; text-decoration:none;
+            background:#6c757d; color:white; border-radius:4px;">
+    All
+  </a>
+
+  <a href="/admin?status=Pending"
+     style="margin:5px; padding:6px 12px; text-decoration:none;
+            background:#dc3545; color:white; border-radius:4px;">
+    Pending
+  </a>
+
+  <a href="/admin?status=Paid"
+     style="margin:5px; padding:6px 12px; text-decoration:none;
+            background:#28a745; color:white; border-radius:4px;">
+    Paid
+  </a>
+</div>
+
+<div class="summary-box">
+  <div class="summary-item">
+    <strong>Total Print Jobs Today</strong><br>
+    {{ total_jobs }}
+  </div>
+
+  <div class="summary-item">
+    <strong>Total Pages Printed Today</strong><br>
+    {{ total_pages }}
+  </div>
+
+  <div class="summary-item">
+    <strong>Total Amount Collected</strong><br>
+    ₹{{ total_amount }}
+  </div>
+</div>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Student Name</th>
+        <th>Course</th>
+        <th>File</th>
+        <th>Pages</th>
+        <th>Copies</th>
+        <th>Amount (₹)</th>
+        <th>Status</th>
+        <th>Action</th>
+        <th>Date & Time</th>
+    </tr>
+
+
+    {% for r in rows %}
+    <tr>
+        <td>{{ r[0] }}</td>
+        <td>{{ r[1] }}</td>
+        <td>{{ r[2] }}</td>
+        <td>{{ r[3] }}</td>
+        <td>{{ r[4] }}</td>
+        <td>{{ r[5] }}</td>
+        <td>{{ r[6] }}</td>
+
+        <td>
+            {% if r[8] == "Paid" %}
+            <span style="color: green; font-weight: bold;">Paid</span>
+            {% else %}
+            <span style="color: red;">Pending</span>
+            {% endif %}
+        </td>
+
+        <td>
+            {% if r[8] != "Paid" %}
+            <a href="/mark_paid/{{ r[0] }}">Mark as Paid</a>
+            {% else %}
+            —
+            {% endif %}
+        </td>
+
+        <td>{{ r[7] }}</td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+</body>
+</html>
